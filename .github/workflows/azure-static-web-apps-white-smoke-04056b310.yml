@@ -1,5 +1,4 @@
 name: Azure Static Web Apps CI/CD
-
 on:
   push:
     branches:
@@ -8,39 +7,40 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - name: Set BUILD_MODE variable conditionally
+      - name: Set BUILD_MODE and DEPLOYMENT_ENV conditionally
         run: |
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             echo "BUILD_MODE=PRODUCTION" >> $GITHUB_ENV
+            echo "DEPLOYMENT_ENV=" >> $GITHUB_ENV
           else
             echo "BUILD_MODE=INTERNAL" >> $GITHUB_ENV
+            echo "DEPLOYMENT_ENV=test" >> $GITHUB_ENV
           fi
         shell: bash
+
       - uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_SMOKE_04056B310 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           skip_app_build: true
-          app_location: "/app" # App source code path
-          api_location: "api" # Api source code path - optional
-          output_location: "dist/static-web-app" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+          app_location: "/app"
+          api_location: "api"
+          output_location: "dist/static-web-app"
+          deployment_environment: ${{ env.DEPLOYMENT_ENV }}  
         env:
           BUILD_MODE: "${{ env.BUILD_MODE }}"
         
@@ -55,3 +55,4 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_SMOKE_04056B310 }}
           action: "close"
+          deployment_environment: "test"  # <-- también acá para que cierre el slot correcto
