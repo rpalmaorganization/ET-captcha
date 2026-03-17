@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Profile 1": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "IN_PREVIEW": "1"
+      }
+    }
+  }
+}

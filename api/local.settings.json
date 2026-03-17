@@ -1,0 +1,19 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "Landing__UrlVerify": "https://www.google.com/recaptcha/api/siteverify",
+    "Landing__SiteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+    "Landing__SecretKey": "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe",
+    "Landing__TestSiteKey": "XXXXXX",
+    "Landing__TestSecretKey": "ZZZZZZ",
+    "BackEndURL": "http://localhost:7120/",
+    "BackEndKey": "*******"
+  },
+  "Host": {
+    "LocalHttpPort": 7071,
+    "CORS": "http://127.0.0.1:5500",
+    "CORSCredentials": false
+  }
+}
