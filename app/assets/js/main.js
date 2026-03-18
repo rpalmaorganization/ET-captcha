@@ -295,4 +295,28 @@ if (form) {
             });
     }, 2000); // Esperar 2 segundos antes de hacer la solicitud
 
+    
+    // check conectividad con el backend
+    setTimeout(() => {
+        fetch("/api/TestFunction", {
+            method: 'GET', // Explicitly specifying GET (optional, since it's default)
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => {
+                // Check if the response is OK (status 200–299)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json(); // Parse JSON response
+            })
+            .then(data => {
+                console.log('Fetched data de Azure Function MGraph:', data);
+            })
+            .catch(error => {
+                console.error('Fetch error:', error.message);
+            });
+    }, 2000); // Esperar 2 segundos antes de hacer la solicitud
+
 }
